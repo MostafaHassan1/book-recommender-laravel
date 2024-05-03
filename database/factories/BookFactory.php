@@ -21,4 +21,13 @@ class BookFactory extends Factory
             'number_of_pages' => $this->faker->numberBetween(20,1000),
         ];
     }
+
+    public function fullyRead(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'number_of_read_pages' => $attributes['number_of_pages'],
+            ];
+        });
+    }
 }
