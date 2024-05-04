@@ -15,6 +15,8 @@ class StoreUserReadingIntervalRequest extends FormRequest
         return true;
     }
 
+    protected $stopOnFirstFailure = true;
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -22,15 +24,15 @@ class StoreUserReadingIntervalRequest extends FormRequest
      */
     public function rules(): array
     {
+        $book = Book::find($this->input('book_id'));
         return [
-            'user_id' => 'required|exists:users',
-            'book_id' => 'required|exists:books',
+            'user_id' => 'required|exists:users,id',
+            'book_id' => 'required|exists:books,id',
             'start_page' => [
                 'required',
                 'integer',
                 'min:1',
-                function ($attribute, $value, $fail) {
-                    $book = Book::find($this->input('book_id'));
+                function ($attribute, $value, $fail) use ($book){
                     if ($value > $book->number_of_pages) {
                         $fail('Invalid start page.');
                     }
@@ -38,10 +40,9 @@ class StoreUserReadingIntervalRequest extends FormRequest
             ],
             'end_page' => [
                 'required',
-                function ($attribute, $value, $fail) {
-                    $book = Book::find($this->input('book_id'));
-                    $startPage = $this->input('start_page');
-                    if ($value < $startPage || $value > $book->number_of_pages) {
+                'gte:start_page',
+                function ($attribute, $value, $fail) use ($book){
+                    if ($value > $book->number_of_pages) {
                         $fail('Invalid end page.');
                     }
                 },
