@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('reading_intervals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId(User::class)->constrained()->cascadeOnDelete();
-            $table->foreignId(Book::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Book::class)->constrained()->cascadeOnDelete();
             $table->unsignedInteger('start_page')->default(1);
             $table->unsignedInteger('end_page');
         });
