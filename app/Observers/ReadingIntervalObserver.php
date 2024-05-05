@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Jobs\CalculateNumberOfPagesReadJob;
 use App\Models\ReadingInterval;
+use App\Notifications\ReadingIntervalCreatedNotification;
 
 class ReadingIntervalObserver
 {
@@ -15,5 +16,7 @@ class ReadingIntervalObserver
         if(! $readingInterval->book->isFullyRead()){
             CalculateNumberOfPagesReadJob::dispatch($readingInterval);
         }
+
+        $readingInterval->user->notify(new ReadingIntervalCreatedNotification());
     }
 }

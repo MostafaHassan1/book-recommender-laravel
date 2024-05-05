@@ -3,6 +3,8 @@
 use App\Jobs\CalculateNumberOfPagesReadJob;
 use App\Models\Book;
 use App\Models\ReadingInterval;
+use App\Notifications\ReadingIntervalCreatedNotification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Queue;
 
 describe('Creating Reading Interval',function (){
@@ -16,5 +18,11 @@ describe('Creating Reading Interval',function (){
         Queue::fake();
         ReadingInterval::factory()->for(Book::factory()->fullyRead())->create();
         Queue::assertNotPushed(CalculateNumberOfPagesReadJob::class);
+    });
+
+    test('ReadIntervalCreatedNotification gets queued', function () {
+        Notification::fake();
+        $readingInterval = ReadingInterval::factory()->create();
+        Notification::assertSentTo($readingInterval->user,ReadingIntervalCreatedNotification::class);
     });
 });
