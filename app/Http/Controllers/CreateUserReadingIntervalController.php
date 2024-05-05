@@ -14,6 +14,6 @@ class CreateUserReadingIntervalController extends Controller
     {
         ReadingInterval::create($request->validated());
 
-        return response()->json(['message' => 'Reading interval submitted successfully'],201);
+        return response()->json(['message' => 'Reading interval submitted successfully'], 201);
     }
 }
