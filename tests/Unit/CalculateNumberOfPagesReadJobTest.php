@@ -78,3 +78,31 @@ test('can calculate number of read pages', function (array $intervals, $numberOf
         ], 33
     ],
 ]);
+
+test('intersected intervals get merged', function () {
+    $book = Book::factory()->create();
+
+    ReadingInterval::factory([
+        'start_page' => 20,
+        'end_page' => 30,
+    ])->for($book)->create();
+    $interval = ReadingInterval::factory([
+        'start_page' => 1,
+        'end_page' => 20,
+    ])->for($book)->create();
+
+    $this->assertDatabaseHas('reading_intervals', [
+        'book_id' => $book->id,
+        'id' => $interval->id,
+        'start_page' => 1,
+        'end_page' => 30,
+        'merged' => false
+    ]);
+
+    $this->assertDatabaseHas('reading_intervals', [
+        'book_id' => $book->id,
+        'start_page' => 20,
+        'end_page' => 30,
+        'merged' => true
+    ]);
+});

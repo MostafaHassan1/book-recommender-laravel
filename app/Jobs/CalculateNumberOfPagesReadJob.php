@@ -26,16 +26,26 @@ class CalculateNumberOfPagesReadJob implements ShouldQueue
     public function handle(): void
     {
         $intersectingIntervals = $this->readingInterval->getIntersectingReadingIntervals();
-        $uniquePagesCount = $this->readingInterval->end_page - $this->readingInterval->start_page;
+        $startPage = $this->readingInterval->start_page;
+        $endPage = $this->readingInterval->end_page;
+        $uniquePagesCount = $endPage - $startPage;
 
         foreach ($intersectingIntervals as $intersectingInterval){
             $overlap = max(
                 0,
-                min($intersectingInterval->end_page,$this->readingInterval->end_page) - max($this->readingInterval->start_page,$intersectingInterval->start_page)
+                min($intersectingInterval->end_page,$endPage) - max($startPage,$intersectingInterval->start_page)
             );
             $uniquePagesCount -= $overlap;
+            $this->mergeIntervals($intersectingInterval, $startPage, $endPage);
         }
+        $this->readingInterval->book()->increment('number_of_read_pages',max(0,$uniquePagesCount));
+    }
 
-        $this->readingInterval->book()->increment('number_of_read_pages',$uniquePagesCount);
+    public function mergeIntervals(ReadingInterval $intersectingInterval, int $startPage, int $endPage): void
+    {
+        $this->readingInterval->start_page = min($intersectingInterval->start_page, $startPage);
+        $this->readingInterval->end_page = max($intersectingInterval->end_page, $endPage);
+        $intersectingInterval->merged();
+        $this->readingInterval->isDirty() ? $this->readingInterval->save() : null;
     }
 }

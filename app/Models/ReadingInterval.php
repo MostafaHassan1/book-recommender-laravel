@@ -29,16 +29,23 @@ class ReadingInterval extends Model
     {
         return self::where('id','!=',$this->id)
             ->where('book_id',$this->book_id)
+            ->where('merged',false) // used to ignore any interval that already got operated on by another intersected interval and merged with it
             ->where(function ($subQuery) {
                 $subQuery->whereBetween('start_page', [$this->start_page, $this->end_page])
                     ->orWhereBetween('end_page', [$this->start_page, $this->end_page]);
             })->get();
     }
 
+    public function merged()
+    {
+        $this->update(['merged' => true]);
+    }
+
     protected function startPage(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => $value == 1 ? 0 : $value,
+            get: fn (int $value) => $value == 1 ? 0 : $value,
+            set: fn(int $value) => $value == 0 ? 1 : $value
         );
     }
 }
