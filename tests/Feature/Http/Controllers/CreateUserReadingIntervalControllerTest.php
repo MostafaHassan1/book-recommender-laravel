@@ -3,7 +3,18 @@
 use App\Models\Book;
 use App\Models\User;
 
-todo('can create reading interval for a user');
+test('can create reading interval for a user',function (){
+    $user = User::factory()->create();
+    $book = Book::factory()->create();
+    $this->post(route('users.reading-intervals.store'),[
+        'user_id' => $user->id,
+        'book_id' => $book->id,
+        'start_page' => 1,
+        'end_page' => $book->number_of_pages,
+    ])->assertSuccessful();
+
+    $this->assertDatabaseCount('reading_intervals',1);
+});
 
 test('throws validation error',function ($user,$book,$startPage,$endPage,$validationErrorKey){
     $this->post(route('users.reading-intervals.store'),[
