@@ -30,7 +30,7 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'sms_provider' => env('SMS_PROVIDER','first_sms_provider'),
     'first_sms_provider' => [
         'url' => env('FIRST_SMS_URL'),
     ],
