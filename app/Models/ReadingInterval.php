@@ -27,7 +27,7 @@ class ReadingInterval extends Model
 
     public function getIntersectingReadingIntervals()
     {
-        return self::where('id','!=',$this->id)
+        return self::where('id','<',$this->id) // only older intervals than this one
             ->where('book_id',$this->book_id)
             ->where('merged',false) // used to ignore any interval that already got operated on by another intersected interval and merged with it
             ->where(function ($subQuery) {
