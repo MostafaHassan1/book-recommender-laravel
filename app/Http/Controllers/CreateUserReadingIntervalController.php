@@ -12,8 +12,8 @@ class CreateUserReadingIntervalController extends Controller
      */
     public function __invoke(StoreUserReadingIntervalRequest $request)
     {
-        $readingInterval = ReadingInterval::create($request->validated());
+        ReadingInterval::create($request->validated());
 
-        response()->json($readingInterval,201);
+        return response()->json(['message' => 'Reading interval submitted successfully'],201);
     }
 }
