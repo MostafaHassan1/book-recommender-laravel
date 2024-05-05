@@ -4,8 +4,6 @@ use App\Models\Book;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 
 test('can get books sorted by most read pages',function (){
-    $this->withoutExceptionHandling();
-
     $mostReadBook = Book::factory([
         'number_of_pages' => 100
     ])->fullyRead()->create();

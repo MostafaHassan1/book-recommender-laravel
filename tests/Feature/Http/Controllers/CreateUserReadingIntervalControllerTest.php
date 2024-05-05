@@ -2,8 +2,10 @@
 
 use App\Models\Book;
 use App\Models\User;
+use Illuminate\Support\Facades\Notification;
 
 test('can create reading interval for a user',function (){
+    Notification::fake();
     $user = User::factory()->create();
     $book = Book::factory()->create();
     $this->post(route('users.reading-intervals.store'),[
@@ -17,6 +19,7 @@ test('can create reading interval for a user',function (){
 });
 
 test('throws validation error',function ($user,$book,$startPage,$endPage,$validationErrorKey){
+    Notification::fake();
     $this->post(route('users.reading-intervals.store'),[
         'user_id' => $user?->id,
         'book_id' => $book?->id,

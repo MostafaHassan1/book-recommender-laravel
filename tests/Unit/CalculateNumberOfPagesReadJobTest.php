@@ -2,8 +2,11 @@
 
 use App\Models\Book;
 use App\Models\ReadingInterval;
+use Illuminate\Support\Facades\Notification;
 
 test('can calculate number of read pages', function (array $intervals, $numberOfReadPages) {
+    Notification::fake();
+
     $book = Book::factory()->create();
 
     foreach ($intervals as $interval) {
