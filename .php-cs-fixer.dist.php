@@ -45,4 +45,4 @@ return (new Config())
             ->exclude(['dev-tools/phpstan', 'tests/Fixtures'])
             ->in(__DIR__)
     )
-    ;
+;

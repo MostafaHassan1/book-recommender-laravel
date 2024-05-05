@@ -1,5 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +26,7 @@ class Book extends Model
 
     public function scopeMostRead(Builder $query): Builder
     {
-        return $query->orderBy('number_of_read_pages','desc');
+        return $query->orderBy('number_of_read_pages', 'desc');
     }
 
     public function readingIntervals(): HasMany
@@ -24,6 +36,6 @@ class Book extends Model
 
     public function isFullyRead(): bool
     {
-        return $this->number_of_read_pages == $this->number_of_pages;
+        return $this->number_of_read_pages === $this->number_of_pages;
     }
 }
