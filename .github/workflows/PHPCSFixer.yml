@@ -14,5 +14,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: luminsports/github-action-php-cs-fixer@main
+      - uses: alhassanaraouf/github-action-php-cs-fixer@main
 
