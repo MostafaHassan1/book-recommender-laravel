@@ -17,9 +17,7 @@ class CalculateNumberOfPagesReadJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(private readonly ReadingInterval $readingInterval)
-    {
-    }
+    public function __construct(private readonly ReadingInterval $readingInterval) {}
 
     /**
      * Get the middleware the job should pass through.
@@ -29,7 +27,7 @@ class CalculateNumberOfPagesReadJob implements ShouldQueue
     public function middleware(): array
     {
         return [
-            new WithoutOverlapping($this->readingInterval->book_id) // should only process one interval per book at a time
+            new WithoutOverlapping($this->readingInterval->book_id), // should only process one interval per book at a time
         ];
     }
 
@@ -43,15 +41,15 @@ class CalculateNumberOfPagesReadJob implements ShouldQueue
         $endPage = $this->readingInterval->end_page;
         $uniquePagesCount = $endPage - $startPage;
 
-        foreach ($intersectingIntervals as $intersectingInterval){
+        foreach ($intersectingIntervals as $intersectingInterval) {
             $overlap = max(
                 0,
-                min($intersectingInterval->end_page,$endPage) - max($startPage,$intersectingInterval->start_page)
+                min($intersectingInterval->end_page, $endPage) - max($startPage, $intersectingInterval->start_page)
             );
             $uniquePagesCount -= $overlap;
             $this->mergeIntervals($intersectingInterval, $startPage, $endPage);
         }
-        $this->readingInterval->book()->increment('number_of_read_pages',max(0,$uniquePagesCount));
+        $this->readingInterval->book()->increment('number_of_read_pages', max(0, $uniquePagesCount));
     }
 
     public function mergeIntervals(ReadingInterval $intersectingInterval, int $startPage, int $endPage): void
