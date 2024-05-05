@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 
 class CalculateNumberOfPagesReadJob implements ShouldQueue
@@ -18,6 +19,18 @@ class CalculateNumberOfPagesReadJob implements ShouldQueue
      */
     public function __construct(private readonly ReadingInterval $readingInterval)
     {
+    }
+
+    /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array<int, object>
+     */
+    public function middleware(): array
+    {
+        return [
+            new WithoutOverlapping($this->readingInterval->book_id) // should only process one interval per book at a time
+        ];
     }
 
     /**
