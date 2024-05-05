@@ -69,4 +69,12 @@ test('can calculate number of read pages', function (array $intervals, $numberOf
             ['start_page' => 25, 'end_page' => 33],
         ], 33
     ],
+    'more intervals with gaps' => fn() =>[
+        [
+            ['start_page' => 1, 'end_page' => 20],
+            ['start_page' => 1, 'end_page' => 10],
+            ['start_page' => 30, 'end_page' => 40],
+            ['start_page' => 35, 'end_page' => 43],
+        ], 33
+    ],
 ]);
