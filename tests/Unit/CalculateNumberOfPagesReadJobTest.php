@@ -77,6 +77,13 @@ test('can calculate number of read pages', function (array $intervals, $numberOf
             ['start_page' => 35, 'end_page' => 43],
         ], 33
     ],
+    'only one page' => fn() =>[
+        [
+            ['start_page' => 1, 'end_page' => 1],
+            ['start_page' => 1, 'end_page' => 1],
+            ['start_page' => 1, 'end_page' => 1],
+        ], 1
+    ],
 ]);
 
 test('intersected intervals get merged', function () {
