@@ -27,6 +27,8 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
-        <env name="TELESCOPE_ENABLED" value="false"/>
+        <env name="SMS_PROVIDER" value="first_sms_provider"/>
+        <env name="FIRST_SMS_URL" value="https://run.mocky.io/v3/8eb88272-d769-417c-8c5c-159bb023ec0a"/>
+        <env name="SECOND_SMS_URL" value="https://run.mocky.io/v3/268d1ff4-f710-4aad-b455-a401966af719"/>
     </php>
 </phpunit>
