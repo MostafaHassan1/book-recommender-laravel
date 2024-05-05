@@ -21,4 +21,9 @@ class Book extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function isFullyRead(): bool
+    {
+        return $this->number_of_read_pages == $this->number_of_pages;
+    }
 }
