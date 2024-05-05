@@ -14,7 +14,7 @@ class Book extends Model
 
     public function scopeMostRead(Builder $query): Builder
     {
-        return $query->orderBy('number_of_read_pages','desc');
+        return $query->orderBy('number_of_read_pages', 'desc');
     }
 
     public function readingIntervals(): HasMany

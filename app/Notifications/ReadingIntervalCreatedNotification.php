@@ -4,7 +4,6 @@ namespace App\Notifications;
 
 use App\ToSMSInterface;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -15,10 +14,7 @@ class ReadingIntervalCreatedNotification extends Notification implements ToSMSIn
     /**
      * Create a new notification instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct() {}
 
     /**
      * Get the notification's delivery channels.
@@ -35,7 +31,7 @@ class ReadingIntervalCreatedNotification extends Notification implements ToSMSIn
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
+        return (new MailMessage())
                     ->line('The introduction to the notification.')
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
@@ -49,12 +45,12 @@ class ReadingIntervalCreatedNotification extends Notification implements ToSMSIn
     public function toArray(object $notifiable): array
     {
         return [
-            //
+
         ];
     }
 
     public function toSMS(object $notifiable): string
     {
-        return "Thank you for submitting your readings";
+        return 'Thank you for submitting your readings';
     }
 }

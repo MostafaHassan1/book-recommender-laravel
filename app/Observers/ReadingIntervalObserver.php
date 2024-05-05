@@ -13,7 +13,7 @@ class ReadingIntervalObserver
      */
     public function created(ReadingInterval $readingInterval): void
     {
-        if(! $readingInterval->book->isFullyRead()){
+        if (! $readingInterval->book->isFullyRead()) {
             CalculateNumberOfPagesReadJob::dispatch($readingInterval);
         }
 

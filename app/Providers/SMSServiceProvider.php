@@ -15,11 +15,11 @@ class SMSServiceProvider extends ServiceProvider implements DeferrableProvider
     public function register(): void
     {
         $this->app->singleton(SMSService::class, function (Application $app) {
-            $smsProviderName = config('services.sms_provider','first_sms_provider');
+            $smsProviderName = config('services.sms_provider', 'first_sms_provider');
+
             return new SMSService(config("services.$smsProviderName.url"));
         });
     }
-
 
     /**
      * Get the services provided by the provider.
@@ -34,8 +34,5 @@ class SMSServiceProvider extends ServiceProvider implements DeferrableProvider
     /**
      * Bootstrap services.
      */
-    public function boot(): void
-    {
-        //
-    }
+    public function boot(): void {}
 }
