@@ -31,4 +31,11 @@ return [
         ],
     ],
 
+    'first_sms_provider' => [
+        'url' => env('FIRST_SMS_URL'),
+    ],
+
+    'second_sms_provider' => [
+        'url' => env('SECOND_SMS_URL'),
+    ],
 ];
