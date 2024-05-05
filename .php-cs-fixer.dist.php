@@ -1,40 +1,83 @@
 <?php
-
-declare(strict_types=1);
-
-/*
- * This file is part of PHP CS Fixer.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
- *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+/**
+ * Copyright (c) 2019 Lumin Sports Technology - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential.
  */
 
-use PhpCsFixer\Config;
-use PhpCsFixer\Finder;
+$finder = PhpCsFixer\Finder::create()
+    ->in(array_values(array_filter([
+        __DIR__ . '/app',
+        __DIR__ . '/src',
+        __DIR__ . '/tests'
+    ], 'is_dir')))
+    ->notName('*.blade.php')
+    ->name('*.php');
 
-return (new Config())
+$config = new PhpCsFixer\Config;
+
+$config->setRules([
+    '@Symfony'                              => true,
+    'array_syntax'                          => ['syntax' => 'short'],
+    'increment_style'                       => ['style' => 'post'],
+    'array_indentation'                     => true,
+    'binary_operator_spaces'                => [
+        'operators' => [
+            '=>' => 'align',
+        ],
+    ],
+    'ordered_class_elements'                => [
+        'order' => [
+            'use_trait',
+            'case',
+            'property_public',
+            'property_protected',
+            'property_private',
+            'property_public_static',
+            'property_protected_static',
+            'property_private_static',
+            'constant_public',
+            'constant_protected',
+            'constant_private',
+            'construct',
+            'phpunit',
+            'method_public',
+            'method_protected',
+            'method_private',
+            'method_public_abstract',
+            'method_protected_abstract',
+            'method_private_abstract',
+            'destruct',
+            'magic',
+            'phpunit'
+        ],
+    ],
+    'blank_line_before_statement'           => true,
+    'concat_space'                          => ['spacing' => 'one'],
+    'linebreak_after_opening_tag'           => true,
+    'no_php4_constructor'                   => true,
+    'no_unreachable_default_argument_value' => true,
+    'no_alias_functions'                    => true,
+    'no_extra_blank_lines'                  => true,
+    'echo_tag_syntax'                       => ['format' => 'long'],
+    'no_useless_else'                       => true,
+    'no_useless_return'                     => true,
+    'no_trailing_whitespace'                => true,
+    'not_operator_with_successor_space'     => true,
+    'fully_qualified_strict_types'          => true,
+    'ordered_imports'                       => true,
+    'self_accessor'                         => true,
+    'phpdoc_order'                          => true,
+    'phpdoc_align'                          => ['tags' => ['param', 'property', 'property-read', 'property-write', 'return', 'throws', 'var', 'method'], 'align' => 'vertical'],
+    'simplified_null_return'                => true,
+    'new_with_braces'                       => false,
+    'single_trait_insert_per_statement'     => false,
+    'single_line_empty_body'                => true,
+    'yoda_style'                            => false,
+    'php_unit_method_casing'                => ['case' => 'snake_case'],
+    'phpdoc_no_alias_tag'                   => ['replacements' => ['type' => 'var', 'link' => 'see']],
+]);
+
+return $config->setFinder($finder)
     ->setRiskyAllowed(true)
-    ->setRules([
-        '@PHP74Migration' => true,
-        '@PHP74Migration:risky' => true,
-        '@PHPUnit100Migration:risky' => true,
-        '@PhpCsFixer' => true,
-        '@PhpCsFixer:risky' => true,
-        'general_phpdoc_annotation_remove' => ['annotations' => ['expectedDeprecation']], // one should use PHPUnit built-in method instead
-        'header_comment' => ['header' => null],
-        'modernize_strpos' => true, // needs PHP 8+ or polyfill
-        'no_useless_concat_operator' => false, // TODO switch back on when the `src/Console/Application.php` no longer needs the concat
-        'numeric_literal_separator' => true,
-        'string_implicit_backslashes' => true, // https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/pull/7786
-    ])
-    ->setFinder(
-        (new Finder())
-            ->ignoreDotFiles(false)
-            ->ignoreVCSIgnored(true)
-            ->exclude(['dev-tools/phpstan', 'tests/Fixtures'])
-            ->in(__DIR__)
-    )
-    ;
+    ->setUsingCache(true);
