@@ -16,6 +16,6 @@ class SMSService
             'message' => $message
         ]);
 
-        thorw_if($response->failed(),'Failed to send SMS message with error:' . $response->body());
+        throw_if($response->failed(),'Failed to send SMS message with error:' . $response->body());
     }
 }
