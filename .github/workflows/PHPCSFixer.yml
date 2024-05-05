@@ -14,5 +14,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: PHP-CS-Fixer
-        uses: docker://oskarstark/php-cs-fixer-ga
+      - uses: luminsports/github-action-php-cs-fixer@main
+
