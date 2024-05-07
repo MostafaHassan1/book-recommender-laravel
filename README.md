@@ -13,7 +13,7 @@ To install the Books Recommender Laravel project, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/books-recommender-laravel.git
+   git clone https://github.com/mostafahassan1/books-recommender-laravel.git
 2. Navigate to the project directory:
     ```bash
     cd books-recommender-laravel
@@ -45,7 +45,7 @@ To run the Books Recommender Laravel project using Docker, follow these steps:
 We are using [Laravel Sail](https://laravel.com/docs/11.x/sail)
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/books-recommender-laravel.git
+    git clone https://github.com/mostafahassan1/books-recommender-laravel.git
     ```
 2. Navigate to the project directory:
     ```bash
